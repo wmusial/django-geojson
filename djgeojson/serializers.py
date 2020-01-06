@@ -68,6 +68,8 @@ class DjangoGeoJSONEncoder(DjangoJSONEncoder):
 
     def default(self, o):
         if isinstance(o, GEOSGeometry):
+            if isinstance(o.geojson, dict):
+                return o.geojson
             return json.loads(o.geojson)
         else:
             return super(DjangoGeoJSONEncoder, self).default(o)
